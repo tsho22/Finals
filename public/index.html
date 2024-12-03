@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSville Courier Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>JSville Courier Management System</h1>
+        <form id="packageForm">
+            <label for="recipientName">Recipient Name:</label>
+            <input type="text" id="recipientName" placeholder="Enter recipient's name" required><br><br>
+
+            <label for="packageID">Package ID:</label>
+            <input type="text" id="packageID" placeholder="Enter numeric ID" required><br><br>
+
+            <label for="deliveryAddress">Delivery Address:</label>
+            <input type="text" id="deliveryAddress" placeholder="Enter delivery address" required><br><br>
+
+            <label for="weight">Weight (kg):</label>
+            <input type="text" id="weight" placeholder="Enter package weight" required><br><br>
+
+            <button type="submit">Add Package</button>
+        </form>
+
+        <h2>Packages</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Recipient Name</th>
+                    <th>Package ID</th>
+                    <th>Delivery Address</th>
+                    <th>Weight (kg)</th>
+                    <th>Tracking Code</th>
+                </tr>
+            </thead>
+            <tbody id="packageTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
