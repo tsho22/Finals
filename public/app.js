@@ -19,18 +19,25 @@ document.getElementById('packageForm').addEventListener('submit', function (e) {
         return;
     }
 
+    // Calculate and validate shipping cost
+    const shippingCost = calculateShippingCost(parseFloat(weight));
+    if (shippingCost > 50) {
+        alert(`Shipping cost exceeds $50 (${shippingCost.toFixed(2)}). Please review.`);
+        return;
+    }
+
     // Add package to table
-    addPackage(recipientName, parseInt(packageID), deliveryAddress, parseFloat(weight));
+    addPackage(recipientName, parseInt(packageID), deliveryAddress, parseFloat(weight), shippingCost);
 });
 
 const packages = [];
 
-function addPackage(recipientName, packageID, deliveryAddress, weight) {
+function addPackage(recipientName, packageID, deliveryAddress, weight, shippingCost) {
     // Generate tracking code
     const trackingCode = generateTrackingCode(packageID, weight);
 
     // Add package to array
-    packages.push({ recipientName, packageID, deliveryAddress, weight, trackingCode });
+    packages.push({ recipientName, packageID, deliveryAddress, weight, shippingCost, trackingCode });
 
     // Sort packages by weight
     packages.sort((a, b) => a.weight - b.weight);
@@ -41,6 +48,12 @@ function addPackage(recipientName, packageID, deliveryAddress, weight) {
 
 function generateTrackingCode(packageID, weight) {
     return (packageID << 4 | weight).toString(2);
+}
+
+function calculateShippingCost(weight) {
+    const baseCost = 5;
+    const additionalCostPerKg = 2;
+    return baseCost + weight * additionalCostPerKg;
 }
 
 function updateTable() {
@@ -54,7 +67,8 @@ function updateTable() {
             <td>${pkg.recipientName}</td>
             <td>${pkg.packageID}</td>
             <td>${pkg.deliveryAddress}</td>
-            <td>${pkg.weight}</td>
+            <td>${pkg.weight.toFixed(2)}</td>
+            <td>${pkg.shippingCost.toFixed(2)}</td>
             <td>${pkg.trackingCode}</td>
         `;
 
